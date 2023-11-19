@@ -1,0 +1,69 @@
+﻿<Window x:Class="bones_v2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:bones_v2"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        PreviewMouseDown="Window_PreviewMouseDown"
+        SizeToContent="WidthAndHeight"
+        Topmost="True">
+    <!-- Auto-size the window -->
+
+    <ListBox x:Name="aListBox" Height="90" Width="1000" Background="Black" BorderThickness="0" PreviewKeyDown="aListBox_PreviewKeyDown" SelectionChanged="aListBox_SelectionChanged" Loaded="aListBox_Loaded" VirtualizingStackPanel.IsVirtualizing="False" ScrollViewer.VerticalScrollBarVisibility="Hidden" Visibility="Hidden">
+        <ListBox.Template>
+            <ControlTemplate TargetType="ListBox">
+                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                    <ScrollViewer Padding="{TemplateBinding Padding}" CanContentScroll="True">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </Border>
+            </ControlTemplate>
+        </ListBox.Template>
+        <ListBox.ItemContainerStyle>
+            <Style TargetType="ListBoxItem">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontFamily" Value="Courier Prime"/>
+                <Setter Property="Opacity" Value="0.75"/>
+                <!-- Default Opacity -->
+                <Style.Triggers>
+                    <!-- Animated Trigger for when the item gets selected -->
+                    <Trigger Property="IsSelected" Value="True">
+                        <Trigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="FontSize" To="28" Duration="0:0:0.1"/>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="FontWeight" Duration="0:0:0.1">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static FontWeights.Bold}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
+                                    <!-- Animate to full opacity -->
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </Trigger.EnterActions>
+                        <Trigger.ExitActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="FontSize" To="20" Duration="0:0:0.1"/>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="FontWeight" Duration="0:0:0.1">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static FontWeights.Normal}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.75" Duration="0:0:0.1"/>
+                                    <!-- Animate back to lower opacity -->
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </Trigger.ExitActions>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ListBox.ItemContainerStyle>
+        <!-- ... other ListBox properties ... -->
+    </ListBox>
+
+</Window>
